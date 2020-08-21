@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Orders;
 
+use App\Models\Address;
+use App\Rules\ValidShippingMethod;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,6 +26,7 @@ class OrderStoreRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
             //
             'address_id' => [
@@ -32,6 +35,11 @@ class OrderStoreRequest extends FormRequest
                     $builder->where('user_id', $this->user()->id);
                 })
             ],
+            'shipping_method_id' => [
+                'required',
+                'exists:shipping_methods,id',
+                new ValidShippingMethod($this->address_id)
+            ]
         ];
     }
 }
