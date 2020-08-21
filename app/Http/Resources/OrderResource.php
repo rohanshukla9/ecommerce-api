@@ -24,7 +24,9 @@ class OrderResource extends JsonResource
             'products' =>  ProductVariationResource::collection(
                 $this->whenLoaded('products')
             ),
-            'address' => new AddressResource($this->whenLoaded('address'))
+            'address' => new AddressResource($this->whenLoaded('address')),
+            'shippingMethod' => new ShippingMethodResource($this->whenLoaded('shippingMethod')),
+
         ];
     }
 }

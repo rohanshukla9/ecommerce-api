@@ -4,6 +4,7 @@ namespace App\Cart;
 
 use App\Models\User;
 use App\Cart\Money;
+use App\Models\ShippingMethod;
 
 class Cart
 {
@@ -11,10 +12,22 @@ class Cart
 
     protected $changed = false;
 
+    protected $shipping;
+
     public function __construct($user)
     {
         $this->user = $user;
     }
+
+
+    public function withShipping($shippingId)
+    {
+        $this->shipping = ShippingMethod::find($shippingId);
+
+        return $this;
+    }
+
+
 
     public function products()
     {
@@ -57,8 +70,6 @@ class Cart
             }
 
 
-
-
             //update the pivot
             $product->pivot->update([
                 'quantity' => $quantity
@@ -97,8 +108,14 @@ class Cart
     {
         //shipping
 
+        if ($this->shipping) {
+            return $this->subtotal()->add($this->shipping->price);
+        }
+
         return $this->subtotal();
     }
+
+
 
 
 
