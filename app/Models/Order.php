@@ -18,6 +18,7 @@ class Order extends Model
         'status',
         'address_id',
         'shipping_method_id',
+        'payment_method_id',
         'subtotal',
         'unique_id',
     ];
