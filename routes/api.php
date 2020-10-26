@@ -7,6 +7,7 @@ Route::resource('products', 'Products\ProductController');
 Route::resource('addresses', 'Addresses\AddressController');
 Route::get('addresses/{address}/shipping', 'Addresses\AddressShippingController@action');
 Route::resource('orders', 'Orders\OrderController');
+Route::resource('payment-methods', 'PaymentMethods\PaymentMethodController');
 
 Route::group(['prefix' => 'auth'], function () {
 

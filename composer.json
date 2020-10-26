@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.0",
         "moneyphp/money": "^3.3",
         "softon/indipay": "^1.2",
+        "stripe/stripe-php": "^7.57",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {

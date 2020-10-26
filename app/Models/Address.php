@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Traits\IsDefault;
 use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
     //
+
+    use IsDefault;
 
     protected $fillable = [
         'name',
@@ -20,20 +23,18 @@ class Address extends Model
     {
         parent::boot();
 
-        static::creating(function($address){
-            if($address->default){
-                $address->user->addresses()->update([
+        static::creating(function ($address) {
+            if ($address->default) {
+                $address->newQuery()->where('user_id', $address->user->id)->update([
                     'default' => false
                 ]);
             }
         });
-
-
     }
 
     public function setDefaultAttribute($value)
     {
-        $this->attributes['default'] = ($value === 'true' || $value ? true : false); 
+        $this->attributes['default'] = ($value === 'true' || $value ? true : false);
     }
 
 
@@ -46,6 +47,4 @@ class Address extends Model
     {
         return $this->hasOne(Country::class, 'id', 'country_id');
     }
-
-
 }
